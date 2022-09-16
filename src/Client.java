@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -13,8 +14,7 @@ public class Client {
         public void startServer(String host, int port) {
             try {
                 // Initializing socket
-                // Socket socket = socket = new Socket("localhost", 1234);
-                Socket socket = socket = new Socket(host, port);
+                Socket socket = new Socket(host, port);
 
                 // Creating character stream reader/writer
                 input = new InputStreamReader(socket.getInputStream());
@@ -59,4 +59,27 @@ public class Client {
                 throw new RuntimeException(e);
             }
         }
+
+    private void createGUI() {
+        JFrame clientFrame = new JFrame("ClientUI");
+        clientFrame.setContentPane(new ClientUI().clientPanel);
+        clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        clientFrame.pack();
+        clientFrame.setBounds(10,10,350,300);
+        clientFrame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+
+        Client testClient = new Client();
+        testClient.startServer("localhost", 1234);
+        testClient.createGUI();
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String userInput = scanner.nextLine();
+            System.out.println(testClient.request(userInput));
+        }
+    }
 }
