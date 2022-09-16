@@ -11,7 +11,7 @@ public class Client {
         private BufferedReader bufferRead;
         private BufferedWriter bufferWrite;
 
-        public void startServer(String host, int port) {
+        public void startClient(String host, int port) {
             try {
                 // Initializing socket
                 Socket socket = new Socket(host, port);
@@ -72,7 +72,7 @@ public class Client {
     public static void main(String[] args) {
 
         Client testClient = new Client();
-        testClient.startServer("localhost", 1234);
+        testClient.startClient("localhost", 1234);
         testClient.createGUI();
 
         Scanner scanner = new Scanner(System.in);
