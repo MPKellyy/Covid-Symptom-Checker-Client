@@ -30,6 +30,7 @@ public class ClientFrame extends JFrame{
     public ClientFrame() {
         // Set up the frame with a few settings.
         viewSet = new JPanel(new CardLayout());
+        System.out.println("Client Started\n");
         viewSet.add(new MessagePanel("Client Started"), "message");
         cardlayout = (CardLayout) (viewSet.getLayout());
         cardlayout.show(viewSet, "message");
@@ -71,7 +72,7 @@ public class ClientFrame extends JFrame{
             bufferRead = new BufferedReader(input);
             bufferWrite = new BufferedWriter(output);
 
-            updateText("Client Connected");
+            updateText("Connected to Server");
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -80,7 +81,7 @@ public class ClientFrame extends JFrame{
     }
 
     public String request(String message) {
-        String response = null;
+        String response;
         try {
             // Writing data in buffer
             bufferWrite.write(message);
@@ -91,7 +92,7 @@ public class ClientFrame extends JFrame{
             // Returning server response
             response = bufferRead.readLine();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            return null;
         }
 
         return response;
@@ -99,11 +100,11 @@ public class ClientFrame extends JFrame{
 
     public void disconnect() {
         try {
-            socket.close();
-            input.close();
-            output.close();
-            bufferRead.close();
-            bufferWrite.close();
+            if (socket != null) { socket.close(); }
+            if (input != null) { input.close(); }
+            if (input != null) { output.close(); }
+            if (bufferRead != null) { bufferRead.close(); }
+            if (bufferRead != null) { bufferWrite.close(); }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -115,9 +116,12 @@ public class ClientFrame extends JFrame{
         while (true) {
             String userInput = scanner.nextLine();
             response = request(userInput);
+            if (response == null) { break; }
             System.out.println(response);
             updateText(response);
         }
+        System.out.println("Server Disconnected");
+        disconnect();
     }
 
     public static void main(String[] args) {
@@ -126,9 +130,11 @@ public class ClientFrame extends JFrame{
             ClientFrame client = new ClientFrame();
             client.startClient("localhost", 1234);
             client.listen();
+            client.dispose();
         }
         catch (Exception e) {
             System.out.println("Unable to connect client. Is server running?");
+            System.exit(0);
         }
     }
 }
