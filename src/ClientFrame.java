@@ -27,7 +27,7 @@ public class ClientFrame extends JFrame{
     /**
      * Constructor for ClientFrame
      */
-    public ClientFrame(String destination, int port) {
+    public ClientFrame() {
         // Set up the frame with a few settings.
         viewSet = new JPanel(new CardLayout());
         viewSet.add(new MessagePanel("Client Started"), "message");
@@ -48,10 +48,6 @@ public class ClientFrame extends JFrame{
         this.setLocationRelativeTo(null);
         this.setTitle("ClientUI");
         this.setVisible(true);
-
-        // Starting client services here
-        startClient(destination, port);
-        listen();
     }
 
     // Java Swing Functions
@@ -126,7 +122,10 @@ public class ClientFrame extends JFrame{
 
     public static void main(String[] args) {
         try {
-            ClientFrame client = new ClientFrame("localhost", 1234);
+            // Starting client services here
+            ClientFrame client = new ClientFrame();
+            client.startClient("localhost", 1234);
+            client.listen();
         }
         catch (Exception e) {
             System.out.println("Unable to connect client. Is server running?");
