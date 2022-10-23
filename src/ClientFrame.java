@@ -3,7 +3,6 @@ import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 
 /**
@@ -22,8 +21,6 @@ public class ClientFrame extends JFrame{
     private OutputStreamWriter output;
     private BufferedReader bufferRead;
     private BufferedWriter bufferWrite;
-
-    // TODO: Add a submission button for form
 
     // Constructor
     /**
@@ -49,16 +46,10 @@ public class ClientFrame extends JFrame{
             }
         });
 
-        // TODO: Add submission button action listener here
-            // Assuming submission button was clicked
-            // response = request(parseForm());
-            // if (response == null)
-                // Notify user that server is disconnected (via dialogbox)
-                // disconnect()
-                // break
-            // Else
-                // Notify user form submission was successful (via dialogbox)
-                // newForm()
+        // Creating a submission button
+        JButton submissionButton=new JButton("Submit");
+        submissionButton.addActionListener(e -> submitForm());
+        this.add(submissionButton, BorderLayout.SOUTH);
 
         // Misc frame settings
         this.setSize(600, 400);
@@ -84,23 +75,25 @@ public class ClientFrame extends JFrame{
      */
     private String parseForm () {
         String binaryResults = "";
+        JPanel form = (JPanel)(viewSet.getComponent(0));
 
-        // TODO: Implement the following parsing logic once a MVP GUI is made for the survey
-        // Note: Not sure if I can iterate through each checkbox sequentially by default, may need
-        // to give each one a unique name/ID then sort them out prior to this parsing. This is
-        // to ensure that server and client are aware of which questions were true/false.
-        // Alternatively, could send over a map with (id, boolean) or (question, boolean)
-        // For a MVP, a simple binary string should do.
-
-        // Assuming I can iterate sequentially by default
-        // For each check box in frame
-        // If checked
-        // binaryResults += "1";
-        // else
-        // binaryResults += "0";
-
-        // This string is for testing purposes only, remove when GUI parsing logic is implemented
-        binaryResults = "11010001";
+        // Selecting the group of checkboxes in form
+        for (Component component: form.getComponents()) {
+            if (component instanceof Box)
+            {
+                Box checkboxes = (Box)component;
+                // Iterate through each check box in order
+                for (int i = 0; i < checkboxes.getComponentCount(); i++) {
+                    JCheckBox checkbox = (JCheckBox)checkboxes.getComponent(i);
+                    // Update binary result string: 1 for checked, 0 for unchecked
+                    if (checkbox.isSelected()) {
+                        binaryResults += "1";
+                    } else {
+                        binaryResults += "0";
+                    }
+                }
+            }
+        }
 
         return binaryResults;
     }
@@ -129,6 +122,24 @@ public class ClientFrame extends JFrame{
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Attempts to send form results to server via a binary string.
+     * If server is offline, client is notified and application is closed
+     */
+    private void submitForm() {
+        // Assuming submission button was clicked
+        String response = request(parseForm());
+        if (response == null) {
+            JOptionPane.showMessageDialog(this, "Error: Server disconnected");
+            System.out.println("Client Disconnected");
+            disconnect();
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Submission was successful");
+            newForm();
         }
     }
 
@@ -175,17 +186,9 @@ public class ClientFrame extends JFrame{
      * Allows client to actively listen server
      */
     public void listen() {
-        // TODO: Remove the commented out code logic once parsing is implemented in submission button listener
-//        Scanner scanner = new Scanner(System.in);
-//        String response;
         while (true) {
-//            String userInput = scanner.nextLine();
-//            response = request(userInput);
-//            if (response == null) { break; }
-//            System.out.println(response);
+            // Busy wait logic, infinite loop until client application closes
         }
-//        System.out.println("Server Disconnected");
-        // disconnect();
     }
 
     /**
