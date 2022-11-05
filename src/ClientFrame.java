@@ -138,7 +138,7 @@ public class ClientFrame extends JFrame{
             disconnect();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Submission was successful");
+            JOptionPane.showMessageDialog(this, "Infection Status: " + response);
             newForm();
         }
     }

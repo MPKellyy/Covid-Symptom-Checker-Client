@@ -13,7 +13,7 @@ public class FormPanel extends JPanel{
         cb6=new JCheckBox("Fever/Chills");
         cb7=new JCheckBox("Nausea");
         cb8=new JCheckBox("Close contact with someone exposed? (Check box for yes)");
-        cb9=new JCheckBox("Up to date with vaccinations? (Check box for yes)");
+        cb9=new JCheckBox("Up to date with vaccinations? (Check box for no)");
         setLayout(new BorderLayout());
         Box box = Box.createVerticalBox();
 
