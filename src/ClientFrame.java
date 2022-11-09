@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 /**
  * This class is responsible controlling which panel is displayed to the user.
  * This class also serves the main frame for the software.
- * Uses observer pattern
+ * Uses observer pattern.
  */
 public class ClientFrame extends JFrame{
     // Java Swing Attributes
@@ -24,7 +24,7 @@ public class ClientFrame extends JFrame{
 
     // Constructor
     /**
-     * Constructor for ClientFrame
+     * Constructor for ClientFrame.
      */
     public ClientFrame() {
         System.out.println("Client Started\n");
@@ -61,7 +61,7 @@ public class ClientFrame extends JFrame{
 
     // Java Swing Functions
     /**
-     * Automatically replaces old viewable frame with a new viewable frame
+     * Automatically replaces old viewable frame with a new viewable frame.
      */
     private void newForm() {
         viewSet.add(new FormPanel(), "form");
@@ -71,7 +71,7 @@ public class ClientFrame extends JFrame{
 
     /**
      * Reads checkboxes within form. Checked = '1', unchecked = '0' per question.
-     * @return a binary string containing form answers
+     * @return a binary string containing form answers.
      */
     private String parseForm () {
         String binaryResults = "";
@@ -100,9 +100,9 @@ public class ClientFrame extends JFrame{
 
     // Client functions
     /**
-     * Connects client to host socket, establishes a read/write buffer, and initializes first panel for frame
-     * @param host Host name (i.e. "localhost")
-     * @param port Port number (i.e. 1234)
+     * Connects client to host socket, establishes a read/write buffer, and initializes first panel for frame.
+     * @param host Host name (i.e. "localhost").
+     * @param port Port number (i.e. 1234).
      */
     public void startClient(String host, int port) {
         try {
@@ -127,7 +127,7 @@ public class ClientFrame extends JFrame{
 
     /**
      * Attempts to send form results to server via a binary string.
-     * If server is offline, client is notified and application is closed
+     * If server is offline, client is notified and application is closed.
      */
     private void submitForm() {
         // Assuming submission button was clicked
@@ -144,9 +144,9 @@ public class ClientFrame extends JFrame{
     }
 
     /**
-     * Send server form, receive server response
-     * @param message A binary string representing form answers
-     * @return Server response. Either string (if connected) or null (if disconnected)
+     * Send server form, receive server response.
+     * @param message A binary string representing form answers.
+     * @return Server response. Either string (if connected) or null (if disconnected).
      */
     private String request(String message) {
         String response;
@@ -167,7 +167,7 @@ public class ClientFrame extends JFrame{
     }
 
     /**
-     * Ensures client is properly disengaged from server, also closes frame
+     * Ensures client is properly disengaged from server, also closes frame.
      */
     public void disconnect() {
         try {
@@ -183,7 +183,7 @@ public class ClientFrame extends JFrame{
     }
 
     /**
-     * Allows client to actively listen server
+     * Allows client to actively listen server.
      */
     public void listen() {
         while (true) {
@@ -192,7 +192,7 @@ public class ClientFrame extends JFrame{
     }
 
     /**
-     * Initializing client frame
+     * Initializing client frame.
      * @param args
      */
     public static void main(String[] args) {
