@@ -135,7 +135,7 @@ public class ClientFrame extends JFrame{
             JOptionPane.showMessageDialog(this, "Error: Server disconnected");
             System.out.println("Client Disconnected");
             disconnect();
-            this.dispose();
+            System.exit(2);
         } else {
             JOptionPane.showMessageDialog(this, "Infection Status: " + response);
             newForm();
@@ -195,15 +195,16 @@ public class ClientFrame extends JFrame{
      * @param args
      */
     public static void main(String[] args) {
+        ClientFrame client = new ClientFrame();
         try {
             // Starting client services here
-            ClientFrame client = new ClientFrame();
             client.startClient("localhost", 1234);
             client.listen();
         }
         catch (Exception e) {
             System.out.println("Unable to connect client. Is server running?");
-            System.exit(0);
+            JOptionPane.showMessageDialog(client, "Unable to connect client. Is server running?");
+            System.exit(1);
         }
     }
 }
