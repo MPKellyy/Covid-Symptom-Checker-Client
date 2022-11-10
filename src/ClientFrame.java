@@ -135,7 +135,7 @@ public class ClientFrame extends JFrame{
             JOptionPane.showMessageDialog(this, "Error: Server disconnected");
             System.out.println("Client Disconnected");
             disconnect();
-            System.exit(2);
+            System.exit(0);
         } else {
             JOptionPane.showMessageDialog(this, "Infection Status: " + response);
             newForm();
@@ -204,7 +204,7 @@ public class ClientFrame extends JFrame{
         catch (Exception e) {
             System.out.println("Unable to connect client. Is server running?");
             JOptionPane.showMessageDialog(client, "Unable to connect client. Is server running?");
-            System.exit(1);
+            System.exit(0);
         }
     }
 }
